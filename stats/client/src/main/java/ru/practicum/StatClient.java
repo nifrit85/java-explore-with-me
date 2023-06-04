@@ -1,6 +1,6 @@
 package ru.practicum;
 
-import ru.practicum.stats.dto.StatsDto;
+import ru.practicum.dto.StatsDto;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -12,11 +12,11 @@
     </parent>
     <artifactId>stats</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-SNAPSHOT</version>
 
     <modules>
-        <module>model</module>
+        <module>dto</module>
         <module>server</module>
+        <module>client</module>
     </modules>
 
     <properties>

@@ -1,16 +1,20 @@
-package ru.practicum.service.stats;
+package ru.practicum.service.impl;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import ru.practicum.dto.StatsDto;
+import ru.practicum.model.Stats;
+import ru.practicum.model.mapper.StatsMapper;
 import ru.practicum.repository.StatsRepository;
-import ru.practicum.stats.dto.StatsDto;
+import ru.practicum.service.StatsService;
 
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -25,7 +29,7 @@ public class StatsServiceImpl implements StatsService {
         LocalDateTime startDate = LocalDateTime.parse(URLDecoder.decode(start, StandardCharsets.UTF_8), FORMATTER);
         LocalDateTime endDate = LocalDateTime.parse(URLDecoder.decode(end, StandardCharsets.UTF_8), FORMATTER);
 
-        List<StatsDto> statsDtoList;
+        List<Stats> statsDtoList;
         if (uris == null) {
             if (unique) {
                 log.debug("Получаем стастику за период {} - {} c учётом уникальных посещений", startDate, endDate);
@@ -43,6 +47,9 @@ public class StatsServiceImpl implements StatsService {
                 statsDtoList = statsRepository.findAllByUris(uris, startDate, endDate);
             }
         }
-        return statsDtoList;
+        return statsDtoList
+                .stream()
+                .map(StatsMapper::toDto)
+                .collect(Collectors.toList());
     }
 }

@@ -1,6 +1,6 @@
-package ru.practicum.service.stats;
+package ru.practicum.service;
 
-import ru.practicum.stats.dto.StatsDto;
+import ru.practicum.dto.StatsDto;
 
 import java.util.List;
 

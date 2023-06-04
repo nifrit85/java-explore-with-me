@@ -1,6 +1,6 @@
-package ru.practicum.service.hit;
+package ru.practicum.service;
 
-import ru.practicum.hit.dto.HitDto;
+import ru.practicum.dto.HitDto;
 
 public interface HitService {
 

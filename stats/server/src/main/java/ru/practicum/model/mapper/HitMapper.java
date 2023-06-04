@@ -1,7 +1,7 @@
-package ru.practicum.hit.mapper;
+package ru.practicum.model.mapper;
 
-import ru.practicum.hit.dto.HitDto;
-import ru.practicum.hit.model.Hit;
+import ru.practicum.dto.HitDto;
+import ru.practicum.model.Hit;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

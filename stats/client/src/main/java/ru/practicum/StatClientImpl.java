@@ -5,8 +5,8 @@ import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.WebClient;
-import ru.practicum.hit.dto.HitDto;
-import ru.practicum.stats.dto.StatsDto;
+import ru.practicum.dto.HitDto;
+import ru.practicum.dto.StatsDto;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

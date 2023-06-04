@@ -1,15 +1,13 @@
-package ru.practicum.hit.model;
+package ru.practicum.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 
-@Data
 @Builder
 @Entity
 @NoArgsConstructor

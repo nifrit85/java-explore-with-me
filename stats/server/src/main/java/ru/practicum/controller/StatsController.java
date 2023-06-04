@@ -1,11 +1,11 @@
-package ru.practicum.controller.stats;
+package ru.practicum.controller;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.service.stats.StatsService;
-import ru.practicum.stats.dto.StatsDto;
+import ru.practicum.dto.StatsDto;
+import ru.practicum.service.StatsService;
 
 import java.util.List;
 
@@ -23,7 +23,9 @@ public class StatsController {
                               @RequestParam String end,
                               @RequestParam(required = false) String[] uris,
                               @RequestParam(defaultValue = "false") boolean unique) {
-        log.info("Запрос GET: get(String start, String end, String[] uris, boolean unique) на получение статистики");
-        return statsService.get(start, end, uris, unique);
+        log.info("Запрос на получение статистики за период {} - {}", start, end);
+        List<StatsDto> listToReturn = statsService.get(start, end, uris, unique);
+        log.info("Получено элементов: {}", listToReturn.size());
+        return listToReturn;
     }
 }
