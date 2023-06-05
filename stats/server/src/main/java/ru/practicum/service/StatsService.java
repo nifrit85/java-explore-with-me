@@ -16,5 +16,5 @@ public interface StatsService {
      * @return Список StatsDto
      */
 
-    List<StatsDto> get(String start, String end, String[] uris, boolean unique);
+    List<StatsDto> get(String start, String end, List<String> uris, boolean unique);
 }

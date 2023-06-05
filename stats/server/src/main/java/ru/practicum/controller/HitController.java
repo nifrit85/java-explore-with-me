@@ -15,6 +15,12 @@ public class HitController {
 
     private final HitService hitService;
 
+    /**
+     * Добавление записи в статистику
+     *
+     * @param dto данные для сохранения
+     */
+
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
     public void create(@RequestBody HitDto dto) {

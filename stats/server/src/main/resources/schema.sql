@@ -6,6 +6,6 @@ CREATE TABLE IF NOT EXISTS statistics
     app       VARCHAR(100)                            NOT NULL,
     uri       VARCHAR(255)                            NOT NULL,
     ip        VARCHAR(15)                             NOT NULL,
-    timestamp TIMESTAMP                               NOT NULL,
+    timestamp TIMESTAMP WITHOUT TIME ZONE             NOT NULL,
     PRIMARY KEY (id)
 );

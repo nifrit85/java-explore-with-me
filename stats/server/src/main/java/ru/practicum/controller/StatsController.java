@@ -17,11 +17,21 @@ public class StatsController {
 
     private final StatsService statsService;
 
+    /**
+     * Получение данных из статистики
+     *
+     * @param start  дата начала
+     * @param end    дата окончания
+     * @param uris   список uri
+     * @param unique true сли уникальные переходы
+     * @return список статистики
+     */
+
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
     public List<StatsDto> get(@RequestParam String start,
                               @RequestParam String end,
-                              @RequestParam(required = false) String[] uris,
+                              @RequestParam(required = false) List<String> uris,
                               @RequestParam(defaultValue = "false") boolean unique) {
         log.info("Запрос на получение статистики за период {} - {}", start, end);
         List<StatsDto> listToReturn = statsService.get(start, end, uris, unique);
