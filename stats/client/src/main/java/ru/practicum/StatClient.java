@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface StatClient {
 
+
     /**
      * * Сохранение информации о том, что на uri конкретного сервиса был отправлен запрос пользователем.
      *
@@ -26,5 +27,5 @@ public interface StatClient {
      * @param unique Нужно ли учитывать только уникальные посещения (только с уникальным ip)
      * @return Список StatsDto
      */
-    List<StatsDto> get(LocalDateTime start, LocalDateTime end, String[] uris, Boolean unique);
+    List<StatsDto> get(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique);
 }

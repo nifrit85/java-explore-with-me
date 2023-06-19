@@ -1,6 +1,7 @@
 package ru.practicum;
 
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.BodyInserters;
@@ -13,12 +14,12 @@ import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@PropertySource("classpath:stats-application.properties")
 public class StatClientImpl implements StatClient {
-    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm:ss");
-    private WebClient webClient;
+    private final DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+    private final WebClient webClient;
 
-    public StatClientImpl(String baseurl) {
+    public StatClientImpl(@Value("${statistics-server.url}") String baseurl) {
 
         webClient = WebClient.builder()
                 .baseUrl(baseurl)
@@ -45,26 +46,14 @@ public class StatClientImpl implements StatClient {
     }
 
     @Override
-    public List<StatsDto> get(LocalDateTime start, LocalDateTime end, String[] uris, Boolean unique) {
-        StringBuilder uri = new StringBuilder("/stats?start=" +
-                start.format(dateTimeFormatter) +
-                "&end=" + end.format(dateTimeFormatter));
-        if (uris != null) {
-            uri.append("&uris=");
-            for (String str : uris) {
-                uri.append(str).append(",");
-
-            }
-            uri.deleteCharAt(uri.length() - 1);
-        }
-
-        if (unique != null) {
-            uri.append("&unique=").append(unique);
-        }
-
+    public List<StatsDto> get(LocalDateTime start, LocalDateTime end, List<String> uris, Boolean unique) {
         return webClient.get()
-                .uri(String.valueOf(uri))
-                .accept(MediaType.APPLICATION_JSON)
+                .uri(uriBuilder -> uriBuilder.path("/stats")
+                        .queryParam("start", start.format(dateTimeFormatter))
+                        .queryParam("end", end.format(dateTimeFormatter))
+                        .queryParam("uris", uris)
+                        .queryParam("unique", unique)
+                        .build())
                 .retrieve()
                 .bodyToFlux(StatsDto.class)
                 .collectList()
