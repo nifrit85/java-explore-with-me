@@ -22,7 +22,7 @@ import ru.practicum.events.mapper.EventMapper;
 import ru.practicum.events.model.Event;
 import ru.practicum.events.repository.EventRepository;
 import ru.practicum.exception.ConflictException;
-import ru.practicum.exception.NotFound;
+import ru.practicum.exception.NotFoundException;
 import ru.practicum.exception.ValidationRequestException;
 import ru.practicum.location.model.Location;
 import ru.practicum.location.service.LocationService;
@@ -84,7 +84,7 @@ public class EventServiceImpl implements EventService {
     public Event get(Long id) {
         log.debug("Поучением событие {}", id);
         return eventRepository.findById(id)
-                .orElseThrow(() -> new NotFound("Event", id));
+                .orElseThrow(() -> new NotFoundException("Event", id));
     }
 
     @Override
@@ -353,7 +353,7 @@ public class EventServiceImpl implements EventService {
         statsClient.save("ewm-main-service", request.getRequestURI(), request.getRemoteAddr());
         Event event = get(id);
         if (!event.getState().equals(PUBLISHED)) {
-            throw new NotFound("Event", id);
+            throw new NotFoundException("Event", id);
         }
 
         EventFullDto eventFullDto = toFullDto(event);

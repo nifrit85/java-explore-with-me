@@ -13,7 +13,7 @@ import ru.practicum.category.repository.CategoryRepository;
 import ru.practicum.events.model.Event;
 import ru.practicum.events.service.EventService;
 import ru.practicum.exception.ConflictException;
-import ru.practicum.exception.NotFound;
+import ru.practicum.exception.NotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,21 +50,21 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional(readOnly = true)
     public CategoryDto get(Long id) {
         log.debug("Получение информации о категории c id = {}}", id);
-        return toDto(categoryRepository.findById(id).orElseThrow(() -> new NotFound(CATEGORY, id)));
+        return toDto(categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(CATEGORY, id)));
     }
 
     @Override
     @Transactional(readOnly = true)
     public Category getCategory(Long id) {
         log.debug("Получение модели категории c id = {}}", id);
-        return categoryRepository.findById(id).orElseThrow(() -> new NotFound(CATEGORY, id));
+        return categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(CATEGORY, id));
     }
 
     @Override
     @Transactional
     public CategoryDto update(Long id, CategoryDto dto) {
         log.debug("Запрос на изменение категории id = {}, данные для изменения {}", id, dto);
-        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFound(CATEGORY, id));
+        Category category = categoryRepository.findById(id).orElseThrow(() -> new NotFoundException(CATEGORY, id));
         category.setName(dto.getName());
         return toDto(categoryRepository.save(category));
     }
@@ -74,7 +74,7 @@ public class CategoryServiceImpl implements CategoryService {
     public void existsById(Long id) {
         log.debug("Запрос на существование категории c id = {}", id);
         if (!categoryRepository.existsById(id)) {
-            throw new NotFound(CATEGORY, id);
+            throw new NotFoundException(CATEGORY, id);
         }
     }
 

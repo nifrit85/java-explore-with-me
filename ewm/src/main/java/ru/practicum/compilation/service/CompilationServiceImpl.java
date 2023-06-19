@@ -13,7 +13,7 @@ import ru.practicum.compilation.mapper.CompilationMapper;
 import ru.practicum.compilation.model.Compilation;
 import ru.practicum.compilation.repository.CompilationRepository;
 import ru.practicum.events.service.EventService;
-import ru.practicum.exception.NotFound;
+import ru.practicum.exception.NotFoundException;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +50,7 @@ public class CompilationServiceImpl implements CompilationService {
     public CompilationDto get(Long id) {
         log.debug("Получение подборки событий по её id = {}", id);
         return toDto(compilationRepository.findById(id)
-                .orElseThrow(() -> new NotFound(COMPILATION, id)));
+                .orElseThrow(() -> new NotFoundException(COMPILATION, id)));
     }
 
     @Override
@@ -76,7 +76,7 @@ public class CompilationServiceImpl implements CompilationService {
     @Transactional
     public CompilationDto update(Long id, UpdateCompilationRequest dto) {
         log.debug("Обновление информации о подборке: id = {}, данные для обновления {}", id, dto);
-        Compilation compilation = compilationRepository.findById(id).orElseThrow(() -> new NotFound(COMPILATION, id));
+        Compilation compilation = compilationRepository.findById(id).orElseThrow(() -> new NotFoundException(COMPILATION, id));
         if (dto.getEvents() != null) {
             compilation.setEvents(eventService.getEventIdIn(dto.getEvents()));
         }
@@ -98,7 +98,7 @@ public class CompilationServiceImpl implements CompilationService {
     private void existsById(Long id) {
         log.debug("Запрос на существование подборки c id = {}", id);
         if (!compilationRepository.existsById(id)) {
-            throw new NotFound(COMPILATION, id);
+            throw new NotFoundException(COMPILATION, id);
         }
     }
 }

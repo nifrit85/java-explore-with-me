@@ -13,7 +13,7 @@ import ru.practicum.eventrequests.repository.EventRequestRepository;
 import ru.practicum.events.model.Event;
 import ru.practicum.events.service.EventService;
 import ru.practicum.exception.ConflictException;
-import ru.practicum.exception.NotFound;
+import ru.practicum.exception.NotFoundException;
 import ru.practicum.users.model.User;
 import ru.practicum.users.service.UserService;
 
@@ -77,10 +77,10 @@ public class EventRequestServiceImpl implements EventRequestService {
         userService.existsById(userId);
 
         EventRequest eventRequest = eventRequestRepository.findById(requestId)
-                .orElseThrow(() -> new NotFound(REQUEST, requestId));
+                .orElseThrow(() -> new NotFoundException(REQUEST, requestId));
 
         if (!eventRequest.getRequester().getId().equals(userId)) {
-            throw new NotFound(REQUEST, requestId);
+            throw new NotFoundException(REQUEST, requestId);
         }
 
         eventRequest.setStatus(CANCELED);

@@ -86,9 +86,9 @@ public class ErrorHandler {
                 .build();
     }
 
-    @ExceptionHandler(NotFound.class)
+    @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(NOT_FOUND)
-    public ApiError handleNotFound(final NotFound e) {
+    public ApiError handleNotFound(final NotFoundException e) {
         log.debug(e.toString());
         return ApiError.builder()
                 .errors(Arrays.stream(e.getStackTrace()).map(StackTraceElement::toString).collect(Collectors.toList()))

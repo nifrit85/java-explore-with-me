@@ -1,6 +1,6 @@
 package ru.practicum.users.service;
 
-import ru.practicum.exception.NotFound;
+import ru.practicum.exception.NotFoundException;
 import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.model.User;
 
@@ -37,7 +37,7 @@ public interface UserService {
      * Метод проверки существования пользователя
      *
      * @param id id пользователя
-     * @throws NotFound Пользователь не найден
+     * @throws NotFoundException Пользователь не найден
      */
     void existsById(Long id);
 

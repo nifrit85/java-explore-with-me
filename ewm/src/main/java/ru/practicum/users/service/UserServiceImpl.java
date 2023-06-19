@@ -6,7 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.exception.NotFound;
+import ru.practicum.exception.NotFoundException;
 import ru.practicum.users.dto.UserDto;
 import ru.practicum.users.mapper.UserMapper;
 import ru.practicum.users.model.User;
@@ -59,7 +59,7 @@ public class UserServiceImpl implements UserService {
     public void existsById(Long id) {
         log.debug("Проверка существования пользователя {}", id);
         if (!userRepository.existsById(id)) {
-            throw new NotFound(USER, id);
+            throw new NotFoundException(USER, id);
         }
     }
 
@@ -68,6 +68,6 @@ public class UserServiceImpl implements UserService {
     public User get(Long id) {
         log.debug("Получение пользователя {}", id);
         return userRepository.findById(id)
-                .orElseThrow(() -> new NotFound(USER, id));
+                .orElseThrow(() -> new NotFoundException(USER, id));
     }
 }
