@@ -1,0 +1,1459 @@
+{
+	"info": {
+		"_postman_id": "4fe1b4dd-ce98-4607-9cf7-fd7b68351a5e",
+		"name": "Test Explore With Me - Feature",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Locations",
+			"item": [
+				{
+					"name": "Admin",
+					"item": [
+						{
+							"name": "AddNewLocation",
+							"item": [
+								{
+									"name": "Validation",
+									"item": [
+										{
+											"name": "NoBody",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "NoName",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "EmptyName",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Name = 120",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 201 'Created' HTTP status code and JSON body\", function () {\r",
+															"    pm.response.to.be.success;\r",
+															"    pm.response.to.be.withBody;\r",
+															"    pm.response.to.be.json;\r",
+															"});\r",
+															"\r",
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+															"    pm.expect(jsonData).to.have.property('id');\r",
+															"    pm.expect(jsonData).to.have.property('name');\r",
+															"    pm.expect(jsonData).to.have.property('lat');\r",
+															"    pm.expect(jsonData).to.have.property('lon');\r",
+															"    pm.expect(jsonData).to.have.property('description');\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\",\r\n    \"lat\": 55.0022, \r\n    \"lon\": 82.9434,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Name > 120",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop1\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "NoLatiitude",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "NoLongitude",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "NoDescription",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Description > 7000",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"tKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдгатсрке1\"\r\n\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "Description = 7000",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 201 'Created' HTTP status code and JSON body\", function () {\r",
+															"    pm.response.to.be.success;\r",
+															"    pm.response.to.be.withBody;\r",
+															"    pm.response.to.be.json;\r",
+															"});\r",
+															"\r",
+															"const jsonData = pm.response.json();\r",
+															"\r",
+															"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+															"    pm.expect(jsonData).to.have.property('id');\r",
+															"    pm.expect(jsonData).to.have.property('name');\r",
+															"    pm.expect(jsonData).to.have.property('lat');\r",
+															"    pm.expect(jsonData).to.have.property('lon');\r",
+															"    pm.expect(jsonData).to.have.property('description');\r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"tKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдtKоNтИьgКЩмxЖЪжvБДoБ8рЫщgX9наLU3ОфчйcFйаэУьПЙЦTХФАЧPркРшP5ИсРГиLkйОЧGХCfMвpVl4MКXqхцbjdвJб1пe6yWzГGKnеFraРЧдPНWЬqоЭМАъЩвwTъЯmоkXяЦ3XГDOЭФнс4нhjXЯщЬiyзfYQСOLDРИrэЪй34igА6ЖgиМRЩ2pфУKKЭj4аЕдЖVBхФВРщBжЧFJKVСLgHЧBYпеIЗуJЫъp4jасmnНЛлбUuprэбТXZРMШE5фЬиKъкkХЕТШТ6MАxOХUЭтпGsМZXТтЭэезфПЪMS8iХUKС6dsCЭ5hЦв1UQUАьЗOШпЮтрЩlГОbLRVлb79юrлlC1шlEвzЯrKlQBcЪКIвkPeСИЭmЧпОOКрхэШДчxTцqРKлбт7LЮСРLвGhЧAтцKРИЯnFMпьvmР9М5InLEgWэYРTнUфjИyuEжЫМfУFеmуыeDjUUэьаVqЧСiШеDЬДыJасоMльKЭятЖvПouчlУХKiOРСОwлОйИШiHеЖOXКЙп4иJXжР4eiаqсьххОbБрПЪATф1еЛLVEHЗУеbNрьApSЬe7бяxЕJЭiеxщPyРзвXiжyйМAvЯbkб0ЗвmUСY15ЭWaЕАtГcyyzMшMтнXRXвЭcзBcHьм9сXбмВQФBSжр8LДiдjЧ5fclрцчИХQErркjEgsйлЗpБZlwN8IUhwgяQГУGfcбчBHн9UeЛдHFчЫNжWлМчМHЪHяЧ2нКТwо4euрRgЩвОяm3нЭхSnЩcХпМYyTDFцJИlku7fЮа2ХBPrрRzЬВЭWВГтмцПфВHЛШКhцpМБFQdRzВNРAыпFъБDЭzеmdoаЭрьIмAДjБХФзСPЙ7tiЮюЙBдMрm7RюноXLХ4ФоW0ЙRAgIAЙbDdпfwрZЮ8PпKOZОхкУЧЯAfиДжЛ6pPРwЕЙЦQJVUМ6zЦmajCюгqB1йzcS9GщdDВхFщRPыaErBиШхгцэаhHь9АРV4bсЫkqoy5RнЬЬZнкЦжЦvLЙгQхТиqZзжO1JПхэЯяХDжеBшЧЛKжЫЖм8BЩдХ5Р0yЫяцнRLiзSы9aвmмhZPRЧeДpт5чьsЧЦRDDдгатсрке\"\r\n\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Duplicate",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 409 'Conflict' HTTP status code\", function () {\r",
+													"    pm.response.to.be.error;    \r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "EditLocation",
+							"item": [
+								{
+									"name": "Validation",
+									"item": [
+										{
+											"name": "ID = 0",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location/:id",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "0"
+														}
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "ID = -1",
+											"event": [
+												{
+													"listen": "test",
+													"script": {
+														"exec": [
+															"pm.test(\"Response should have a 400 'Bad Request' HTTP status code\", function () {\r",
+															"    pm.response.to.be.badRequest;    \r",
+															"});"
+														],
+														"type": "text/javascript"
+													}
+												}
+											],
+											"request": {
+												"method": "PATCH",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+													"options": {
+														"raw": {
+															"language": "json"
+														}
+													}
+												},
+												"url": {
+													"raw": "{{baseUr}}/admin/location/:id",
+													"host": [
+														"{{baseUr}}"
+													],
+													"path": [
+														"admin",
+														"location",
+														":id"
+													],
+													"variable": [
+														{
+															"key": "id",
+															"value": "-1"
+														}
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Wrong Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 404 'Not Found' HTTP status code\", function () {\r",
+													"    pm.response.to.be.notFound;    \r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \"Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location/:id",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "9999"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Edit",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 200 'Ok' HTTP status code and JSON body\", function () {\r",
+													"    pm.response.to.be.success;\r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+													"    pm.expect(jsonData).to.have.property('id');\r",
+													"    pm.expect(jsonData).to.have.property('name');\r",
+													"    pm.expect(jsonData).to.have.property('lat');\r",
+													"    pm.expect(jsonData).to.have.property('lon');\r",
+													"    pm.expect(jsonData).to.have.property('description');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "PATCH",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \"Opera theater\",\r\n    \"lat\": 55.0305, \r\n    \"lon\": 82.9245,\r\n    \"description\" : \"Opera House Novat\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location/:id",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "1"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "GetLocations",
+							"item": [
+								{
+									"name": "Get No Ids",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 200 'Created' HTTP status code and JSON body\", function () {\r",
+													"    pm.response.to.be.success;\r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Array should have 10 one element\", function () {\r",
+													"    pm.expect(jsonData.length).to.equal(10);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+													"    pm.expect(jsonData[0]).to.have.property('id');\r",
+													"    pm.expect(jsonData[0]).to.have.property('name');\r",
+													"    pm.expect(jsonData[0]).to.have.property('lat');\r",
+													"    pm.expect(jsonData[0]).to.have.property('lon');\r",
+													"    pm.expect(jsonData[0]).to.have.property('description');\r",
+													"    pm.expect(jsonData[1]).to.have.property('id');\r",
+													"    pm.expect(jsonData[1]).to.have.property('name');\r",
+													"    pm.expect(jsonData[1]).to.have.property('lat');\r",
+													"    pm.expect(jsonData[1]).to.have.property('lon');\r",
+													"    pm.expect(jsonData[1]).to.have.property('description');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\",\r\n    \"lat\": 55.0022, \r\n    \"lon\": 82.9434,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location?ids&from&size",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location"
+											],
+											"query": [
+												{
+													"key": "ids",
+													"value": null
+												},
+												{
+													"key": "from",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "NewLocation",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 201 'Created' HTTP status code and JSON body\", function () {\r",
+													"    pm.response.to.be.success;\r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+													"    pm.expect(jsonData).to.have.property('id');\r",
+													"    pm.expect(jsonData).to.have.property('name');\r",
+													"    pm.expect(jsonData).to.have.property('lat');\r",
+													"    pm.expect(jsonData).to.have.property('lon');\r",
+													"    pm.expect(jsonData).to.have.property('description');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \"Home\",\r\n    \"lat\": 55.0860, \r\n    \"lon\": 82.8056,\r\n    \"description\" : \"Home, Sweet Home\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get Ids 1,3",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 200 'Created' HTTP status code and JSON body\", function () {\r",
+													"    pm.response.to.be.success;\r",
+													"    pm.response.to.be.withBody;\r",
+													"    pm.response.to.be.json;\r",
+													"});\r",
+													"\r",
+													"const jsonData = pm.response.json();\r",
+													"\r",
+													"pm.test(\"Array should have 2 one element\", function () {\r",
+													"    pm.expect(jsonData.length).to.equal(2);\r",
+													"});\r",
+													"\r",
+													"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+													"    pm.expect(jsonData[0]).to.have.property('id');\r",
+													"    pm.expect(jsonData[0]).to.have.property('name');\r",
+													"    pm.expect(jsonData[0]).to.have.property('lat');\r",
+													"    pm.expect(jsonData[0]).to.have.property('lon');\r",
+													"    pm.expect(jsonData[0]).to.have.property('description');\r",
+													"    pm.expect(jsonData[1]).to.have.property('id');\r",
+													"    pm.expect(jsonData[1]).to.have.property('name');\r",
+													"    pm.expect(jsonData[1]).to.have.property('lat');\r",
+													"    pm.expect(jsonData[1]).to.have.property('lon');\r",
+													"    pm.expect(jsonData[1]).to.have.property('description');\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \"qwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiopqwertyuiop\",\r\n    \"lat\": 55.0022, \r\n    \"lon\": 82.9434,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location?ids=1,3&from&size",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location"
+											],
+											"query": [
+												{
+													"key": "ids",
+													"value": "1,3"
+												},
+												{
+													"key": "from",
+													"value": null
+												},
+												{
+													"key": "size",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "DeleteLocation",
+							"item": [
+								{
+									"name": "Delete in use",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 409 'Conflict' HTTP status code\", function () {\r",
+													"    pm.response.to.be.error;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUr}}/admin/location/:id",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "11"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Delete",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 200 'ok' HTTP status code\", function () {\r",
+													"    pm.response.to.be.ok;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUr}}/admin/location/:id",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "110"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Wrong Id",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Response should have a 404 'Not Found' HTTP status code\", function () {\r",
+													"    pm.response.to.be.notFound;    \r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{   \r\n    \"name\": \" Lenin Square\",\r\n    \"lat\": 55.0300, \r\n    \"lon\": 82.9210,\r\n    \"description\" : \"Novosibirsk, Lenin Square\"\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUr}}/admin/location/:id",
+											"host": [
+												"{{baseUr}}"
+											],
+											"path": [
+												"admin",
+												"location",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id",
+													"value": "999"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Public",
+					"item": [
+						{
+							"name": "Get 1km",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response should have a 200 'Created' HTTP status code and JSON body\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"Array should have 1 one element\", function () {\r",
+											"    pm.expect(jsonData.length).to.equal(1);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"JSON body should have 'id', 'name', 'lat' and 'lon' fields\", function () {\r",
+											"    pm.expect(jsonData[0]).to.have.property('id');\r",
+											"    pm.expect(jsonData[0]).to.have.property('name');\r",
+											"    pm.expect(jsonData[0]).to.have.property('lat');\r",
+											"    pm.expect(jsonData[0]).to.have.property('lon');\r",
+											"    pm.expect(jsonData[0]).to.have.property('description');    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUr}}/location?lat=55.0840&lon=82.8081&radius=1&from&size",
+									"host": [
+										"{{baseUr}}"
+									],
+									"path": [
+										"location"
+									],
+									"query": [
+										{
+											"key": "lat",
+											"value": "55.0840"
+										},
+										{
+											"key": "lon",
+											"value": "82.8081"
+										},
+										{
+											"key": "radius",
+											"value": "1"
+										},
+										{
+											"key": "from",
+											"value": null
+										},
+										{
+											"key": "size",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Event",
+					"item": [
+						{
+							"name": "Save user",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response should have a 201 'Created' HTTP status code and JSON body\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"JSON body should have 'id', 'name' and 'email' fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property('id');\r",
+											"    pm.expect(jsonData).to.have.property('name');\r",
+											"    pm.expect(jsonData).to.have.property('email');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\" : \"Its Me\",\r\n    \"email\" : \"user@gmail.com\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUr}}/admin/users",
+									"host": [
+										"{{baseUr}}"
+									],
+									"path": [
+										"admin",
+										"users"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save category",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response should have a 201 'Created' HTTP status code and JSON body\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"JSON body should have 'id' and 'name' fields\", function () {\r",
+											"    pm.expect(jsonData).to.have.property('id');\r",
+											"    pm.expect(jsonData).to.have.property('name');\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\": \"fishing\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUr}}/admin/categories",
+									"host": [
+										"{{baseUr}}"
+									],
+									"path": [
+										"admin",
+										"categories"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Save event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response should have a 201 'Created' HTTP status code and JSON body\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"JSON body should have 'id', 'annotation', 'category', 'createdOn', 'description', 'eventDate', 'initiator', 'location', 'paid', 'participantLimit', 'publishedOn', 'requestModeration', 'state', 'title', 'confirmedRequests' and 'views' fields\", function () {\r",
+											"    \r",
+											"    pm.expect(jsonData).to.have.property('id');\r",
+											"    pm.expect(jsonData).to.have.property('annotation');\r",
+											"    pm.expect(jsonData).to.have.property('category');\r",
+											"    pm.expect(jsonData).to.have.property('createdOn');\r",
+											"    pm.expect(jsonData).to.have.property('description');\r",
+											"    pm.expect(jsonData).to.have.property('eventDate');\r",
+											"    pm.expect(jsonData).to.have.property('initiator');\r",
+											"    pm.expect(jsonData).to.have.property('location');\r",
+											"    pm.expect(jsonData).to.have.property('paid');\r",
+											"    pm.expect(jsonData).to.have.property('participantLimit');\r",
+											"    pm.expect(jsonData).to.have.property('publishedOn');\r",
+											"    pm.expect(jsonData).to.have.property('requestModeration');\r",
+											"    pm.expect(jsonData).to.have.property('state');\r",
+											"    pm.expect(jsonData).to.have.property('title');\r",
+											"    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+											"    pm.expect(jsonData).to.have.property('views');    \r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"annotation\": \"weekend on the river\",\r\n    \"category\": \"1\",\r\n    \"description\": \"weekend on the river\",\r\n    \"eventDate\": \"2023-06-25 12:00:00\",\r\n    \"location\": {\r\n            \"lat\": 55.0851, \r\n            \"lon\": 82.8023\r\n    },\r\n    \"paid\": true,\r\n    \"participantLimit\": 10,\r\n    \"requestModeration\": true,\r\n    \"title\": \"weekend on the river\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUr}}/users/:userId/events",
+									"host": [
+										"{{baseUr}}"
+									],
+									"path": [
+										"users",
+										":userId",
+										"events"
+									],
+									"variable": [
+										{
+											"key": "userId",
+											"value": "136"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Publish event",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response should have a 200 'Ok' HTTP status code and JSON body\", function () {\r",
+											"    pm.response.to.be.ok;\r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"JSON body should have 'id', 'annotation', 'category', 'createdOn', 'description', 'eventDate', 'initiator', 'location', 'paid', 'participantLimit', 'publishedOn', 'requestModeration', 'state', 'title', 'confirmedRequests' and 'views' fields\", function () {\r",
+											"    \r",
+											"    pm.expect(jsonData).to.have.property('id');\r",
+											"    pm.expect(jsonData).to.have.property('annotation');\r",
+											"    pm.expect(jsonData).to.have.property('category');\r",
+											"    pm.expect(jsonData).to.have.property('createdOn');\r",
+											"    pm.expect(jsonData).to.have.property('description');\r",
+											"    pm.expect(jsonData).to.have.property('eventDate');\r",
+											"    pm.expect(jsonData).to.have.property('initiator');\r",
+											"    pm.expect(jsonData).to.have.property('location');\r",
+											"    pm.expect(jsonData).to.have.property('paid');\r",
+											"    pm.expect(jsonData).to.have.property('participantLimit');\r",
+											"    pm.expect(jsonData).to.have.property('publishedOn');\r",
+											"    pm.expect(jsonData).to.have.property('requestModeration');\r",
+											"    pm.expect(jsonData).to.have.property('state');\r",
+											"    pm.expect(jsonData).to.have.property('title');\r",
+											"    pm.expect(jsonData).to.have.property('confirmedRequests');\r",
+											"    pm.expect(jsonData).to.have.property('views');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Event should be published\", function () {\r",
+											"    pm.expect(jsonData.state).to.eql('PUBLISHED');\r",
+											"});\r",
+											""
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"stateAction\": \"PUBLISH_EVENT\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUr}}/admin/events/:eventId",
+									"host": [
+										"{{baseUr}}"
+									],
+									"path": [
+										"admin",
+										"events",
+										":eventId"
+									],
+									"variable": [
+										{
+											"key": "eventId",
+											"value": "106"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get 1km",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response should have a 200 'Created' HTTP status code and JSON body\", function () {\r",
+											"    pm.response.to.be.success;\r",
+											"    pm.response.to.be.withBody;\r",
+											"    pm.response.to.be.json;\r",
+											"});\r",
+											"\r",
+											"const jsonData = pm.response.json();\r",
+											"\r",
+											"pm.test(\"JSON body should be an array\", function () {\r",
+											"    pm.expect(jsonData).to.be.an('array');\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Array should have at least one element\", function () {\r",
+											"    pm.expect(jsonData.length).to.be.at.least(1);\r",
+											"});"
+										],
+										"type": "text/javascript"
+									}
+								}
+							],
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseUr}}/events/location?lat=55.0840&lon=82.8081&radius=1&from&size",
+									"host": [
+										"{{baseUr}}"
+									],
+									"path": [
+										"events",
+										"location"
+									],
+									"query": [
+										{
+											"key": "lat",
+											"value": "55.0840"
+										},
+										{
+											"key": "lon",
+											"value": "82.8081"
+										},
+										{
+											"key": "radius",
+											"value": "1"
+										},
+										{
+											"key": "from",
+											"value": null
+										},
+										{
+											"key": "size",
+											"value": null
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUr",
+			"value": "http://localhost:8080",
+			"type": "default"
+		},
+		{
+			"key": "locationUserId",
+			"value": ""
+		},
+		{
+			"key": "event10Id",
+			"value": ""
+		}
+	]
+}

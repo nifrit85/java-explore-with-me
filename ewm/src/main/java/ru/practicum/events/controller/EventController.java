@@ -76,4 +76,25 @@ public class EventController {
         log.info("Получение информации об опубликованном событии c id = {}", id);
         return eventService.get(id, request);
     }
+
+    /**
+     * Получение списка событий на расстоянии от координат
+     *
+     * @param lat    текущая широта
+     * @param lon    текущая долгота
+     * @param radius расстояние для поиска
+     * @param from   количество локаций, которые нужно пропустить для формирования текущего набора
+     * @param size   количество локаций в наборе
+     * @return Список событий
+     */
+    @GetMapping("/location")
+    @ResponseStatus(HttpStatus.OK)
+    List<EventShortDto> get(@Valid @RequestParam Float lat,
+                            @Valid @RequestParam Float lon,
+                            @Valid @Positive @RequestParam Float radius,
+                            @RequestParam(defaultValue = "0") Integer from,
+                            @RequestParam(defaultValue = "10") Integer size) {
+        log.info("Запрос на получение списка событий в радиусе {} от координат {} : {}", radius, lat, lon);
+        return eventService.get(lat, lon, radius, from, size);
+    }
 }

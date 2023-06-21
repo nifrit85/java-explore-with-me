@@ -26,7 +26,7 @@ public class LocationMapper {
                 .build();
     }
 
-    public static LocationFullDto ToFullDto(Location model) {
+    public static LocationFullDto toFullDto(Location model) {
         return LocationFullDto.builder()
                 .id(model.getId())
                 .lat(model.getLat())

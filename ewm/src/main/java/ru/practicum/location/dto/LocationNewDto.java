@@ -20,7 +20,7 @@ public class LocationNewDto {
     private Float lat;
     @NotNull
     private Float lon;
-    @NotBlank
+    @NotNull
     @Size(max = 7000)
     private String description;
 }

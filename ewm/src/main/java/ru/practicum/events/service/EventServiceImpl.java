@@ -64,19 +64,8 @@ public class EventServiceImpl implements EventService {
 
         userService.exists(id);
         List<Event> events = eventRepository.findAllByInitiatorId(id, pageable);
-        Map<Long, Long> confirmedRequests = getConfirmedRequests(events);
-        Map<Long, Long> views = getViews(events);
 
-        List<EventShortDto> eventShortDtoList = events.stream()
-                .map(EventMapper::toShortDto)
-                .collect(Collectors.toList());
-
-        for (EventShortDto dto : eventShortDtoList) {
-            dto.setViews(views.getOrDefault(dto.getId(), 0L));
-            dto.setConfirmedRequests(confirmedRequests.getOrDefault(dto.getId(), 0L));
-        }
-
-        return eventShortDtoList;
+        return convertToShortDtoList(events);
     }
 
     @Override
@@ -144,7 +133,7 @@ public class EventServiceImpl implements EventService {
             throw new ValidationRequestException("Event date must not be before 2 hours from current time.");
         }
 
-        event = updateEventFromUserRequest(event, dto);
+        updateEventFromUserRequest(event, dto);
 
         EventFullDto eventFullDto = toFullDto(eventRepository.save(event));
         return fillViewAndConfirmedRequests(eventFullDto, event);
@@ -307,20 +296,10 @@ public class EventServiceImpl implements EventService {
                 rangeEnd,
                 PageRequest.of(from / size, size));
 
-        Map<Long, Long> confirmedRequests = getConfirmedRequests(events);
-        Map<Long, Long> views = getViews(events);
-
-        List<EventShortDto> eventShortDtoList = events.stream()
-                .map(EventMapper::toShortDto)
-                .collect(Collectors.toList());
+        List<EventShortDto> eventShortDtoList = convertToShortDtoList(events);
 
         Map<Long, Integer> eventsParticipantLimit = new HashMap<>();
         events.forEach(event -> eventsParticipantLimit.put(event.getId(), event.getParticipantLimit()));
-
-        for (EventShortDto dto : eventShortDtoList) {
-            dto.setViews(views.getOrDefault(dto.getId(), 0L));
-            dto.setConfirmedRequests(confirmedRequests.getOrDefault(dto.getId(), 0L));
-        }
 
         if (onlyAvailable) {
             eventShortDtoList = eventShortDtoList.stream()
@@ -358,6 +337,28 @@ public class EventServiceImpl implements EventService {
 
         EventFullDto eventFullDto = toFullDto(event);
         return fillViewAndConfirmedRequests(eventFullDto, event);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Event getByLocationId(Long locId) {
+        return eventRepository.getFirstByLocation_Id(locId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<EventShortDto> getEventByLocationInAndState(List<Location> locations, State state) {
+        log.debug("Получение списка событий в локациях {} со статусом {}", locations, state);
+        List<Event> events = eventRepository.getEventByLocationInAndState(locations, state);
+
+        return convertToShortDtoList(events);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<EventShortDto> get(Float lat, Float lon, Float radius, Integer from, Integer size) {
+        List<Location> locations = locationService.get(lat, lon, radius, from, size);
+        return getEventByLocationInAndState(locations, PUBLISHED);
     }
 
     /**
@@ -434,7 +435,7 @@ public class EventServiceImpl implements EventService {
     }
 
     /**
-     * Заполнение EventFullDto данными о просмотраз и количестве подтверждённых запросов
+     * Заполнение EventFullDto данными о просмотрах и количестве подтверждённых запросов
      *
      * @param dto   EventFullDto
      * @param event модель события
@@ -449,7 +450,7 @@ public class EventServiceImpl implements EventService {
     }
 
     /**
-     * Проверка, что состояние принадлежит енуму State
+     * Проверка, что состояние принадлежит enum State
      *
      * @param states список строк
      */
@@ -467,7 +468,7 @@ public class EventServiceImpl implements EventService {
     }
 
     /**
-     * Провека что дата rangeStart ранее даты rangeEnd
+     * Проверка, что дата rangeStart ранее даты rangeEnd
      *
      * @param rangeStart дата начала
      * @param rangeEnd   дата конца
@@ -484,10 +485,9 @@ public class EventServiceImpl implements EventService {
      *
      * @param event событие
      * @param dto   запрос на изменение события
-     * @return изменённое событие
      */
 
-    private Event updateEventFromUserRequest(Event event, UpdateEventUserRequest dto) {
+    private void updateEventFromUserRequest(Event event, UpdateEventUserRequest dto) {
         log.debug("Обновляем событие");
 
         if (dto.getTitle() != null) {
@@ -500,8 +500,6 @@ public class EventServiceImpl implements EventService {
             if (dto.getStateAction() == SEND_TO_REVIEW)
                 event.setState(PENDING);
         }
-        return event;
-
     }
 
     /**
@@ -543,5 +541,28 @@ public class EventServiceImpl implements EventService {
         if (requestModeration != null) {
             event.setRequestModeration(requestModeration);
         }
+    }
+
+    /**
+     * Заполнение необходимых данных для конвертации модели Event в EventShortDto
+     *
+     * @param events список событий
+     * @return список EventShortDto
+     */
+
+    private List<EventShortDto> convertToShortDtoList(List<Event> events) {
+
+        Map<Long, Long> confirmedRequests = getConfirmedRequests(events);
+        Map<Long, Long> views = getViews(events);
+
+        List<EventShortDto> eventShortDtoList = events.stream()
+                .map(EventMapper::toShortDto)
+                .collect(Collectors.toList());
+
+        for (EventShortDto dto : eventShortDtoList) {
+            dto.setViews(views.getOrDefault(dto.getId(), 0L));
+            dto.setConfirmedRequests(confirmedRequests.getOrDefault(dto.getId(), 0L));
+        }
+        return eventShortDtoList;
     }
 }

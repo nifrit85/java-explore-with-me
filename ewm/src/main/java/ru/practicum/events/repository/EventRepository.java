@@ -5,7 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ru.practicum.enums.State;
 import ru.practicum.events.model.Event;
+import ru.practicum.location.model.Location;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -21,7 +23,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
 
     List<Event> findByIdAndInitiatorId(Long eventId, Long userId);
 
-    @Query(value = "SELECT * FROM events e WHERE (:users is null or e.initiator_id IN (cast(cast(:users AS TEXT) AS BIGINT))) " +
+    @Query(value = "SELECT * FROM events e " +
+            "WHERE (:users is null or e.initiator_id IN (cast(cast(:users AS TEXT) AS BIGINT))) " +
             "and (:states is null or e.state IN (cast(:states AS text))) " +
             "and (:categories is null or e.category_id IN (cast(cast(:categories AS TEXT) AS BIGINT))) " +
             "and (cast(:rangeStart AS timestamp) is null or e.event_date >= cast(:rangeStart AS timestamp))" +
@@ -34,7 +37,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                            @Param("rangeEnd") LocalDateTime rangeEnd,
                            Pageable pageable);
 
-    @Query(value = "SELECT * FROM events e WHERE (e.state = 'PUBLISHED') " +
+    @Query(value = "SELECT * FROM events e " +
+            "WHERE (e.state = 'PUBLISHED') " +
             "and (:text is null or lower(e.annotation) LIKE lower(concat('%',cast(:text AS text),'%')) " +
             "or lower(e.description) LIKE lower(concat('%',cast(:text AS text),'%'))) " +
             "and (:categories is null or e.category_id IN (cast(cast(:categories AS TEXT) AS BIGINT))) " +
@@ -48,4 +52,8 @@ public interface EventRepository extends JpaRepository<Event, Long> {
                                     @Param("rangeStart") LocalDateTime rangeStart,
                                     @Param("rangeEnd") LocalDateTime rangeEnd,
                                     Pageable pageable);
+
+    Event getFirstByLocation_Id(Long locId);
+
+    List<Event> getEventByLocationInAndState(List<Location> locations, State state);
 }

@@ -4,6 +4,8 @@ import ru.practicum.location.dto.LocationFullDto;
 import ru.practicum.location.dto.LocationNewDto;
 import ru.practicum.location.model.Location;
 
+import java.util.List;
+
 public interface LocationService {
     /**
      * Получение локации по координатам
@@ -49,12 +51,13 @@ public interface LocationService {
      *
      * @param id  id локации для обновления
      * @param dto данные для обновления
-     * @return
+     * @return обновлённые данные локации
      */
     LocationFullDto update(Long id, LocationNewDto dto);
 
     /**
      * Проверка локации на существование
+     *
      * @param id id искомой локации
      */
 
@@ -62,15 +65,46 @@ public interface LocationService {
 
     /**
      * Получение локации по id
+     *
      * @param id id искомой локации
-     * @return
+     * @return искомая локация
      */
     Location get(Long id);
 
     /**
      * Создание локации
+     *
      * @param dto данные локации
-     * @return LocationFullDto
+     * @return данные созданной локации
      */
-    LocationFullDto create( LocationNewDto dto);
+    LocationFullDto create(LocationNewDto dto);
+
+    /**
+     * Удаление локации
+     *
+     * @param id id локации
+     */
+    void delete(Long id);
+
+    /**
+     * Получение списка локаций
+     *
+     * @param ids  список id локаций
+     * @param from количество локаций, которые нужно пропустить для формирования текущего набора
+     * @param size количество локаций в наборе
+     * @return Список найденных локаций
+     */
+    List<LocationFullDto> get(List<Long> ids, Integer from, Integer size);
+
+    /**
+     * Получение списка локаций на расстоянии от координат
+     *
+     * @param lat    текущая широта
+     * @param lon    текущая долгота
+     * @param radius расстояние для поиска
+     * @param from   количество локаций, которые нужно пропустить для формирования текущего набора
+     * @param size   количество локаций в наборе
+     * @return Список событий
+     */
+    List<Location> get(Float lat, Float lon, Float radius, Integer from, Integer size);
 }

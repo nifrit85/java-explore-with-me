@@ -59,7 +59,7 @@ public interface EventRequestService {
     /**
      * Получение списка запросов
      *
-     * @param ids список id апросов
+     * @param ids список id запросов
      * @return список запросов
      */
 
