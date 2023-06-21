@@ -157,4 +157,11 @@ public interface EventService {
 
     EventFullDto get(Long id, HttpServletRequest request);
 
+    /**
+     * Получение одного события в локации
+     * @param locId id локации
+     * @return Событие
+     */
+
+    Event getByLocationId(Long locId);
 }

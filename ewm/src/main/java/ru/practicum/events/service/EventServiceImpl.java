@@ -62,7 +62,7 @@ public class EventServiceImpl implements EventService {
                 from == 0 ? 0 : (from / size),
                 size);
 
-        userService.existsById(id);
+        userService.exists(id);
         List<Event> events = eventRepository.findAllByInitiatorId(id, pageable);
         Map<Long, Long> confirmedRequests = getConfirmedRequests(events);
         Map<Long, Long> views = getViews(events);
@@ -124,7 +124,7 @@ public class EventServiceImpl implements EventService {
     @Transactional(readOnly = true)
     public EventFullDto get(Long userId, Long eventId) {
         log.debug("Получение полной информации о событии с id = {}, добавленном пользователем c id = {}", eventId, userId);
-        userService.existsById(userId);
+        userService.exists(userId);
         Event event = get(eventId);
         EventFullDto eventFullDto = toFullDto(event);
         return fillViewAndConfirmedRequests(eventFullDto, event);
@@ -134,7 +134,7 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventFullDto update(Long userId, Long eventId, UpdateEventUserRequest dto) {
         log.debug("Обновление информации о событии с id = {}, пользователем с id = {}, данные {}", eventId, userId, dto);
-        userService.existsById(userId);
+        userService.exists(userId);
         Event event = get(eventId);
         if (event.getState() != null && event.getState() != PENDING && event.getState() != CANCELED) {
             throw new ConflictException("Only pending or canceled events can be changed");
@@ -154,7 +154,7 @@ public class EventServiceImpl implements EventService {
     @Transactional(readOnly = true)
     public List<ParticipationRequestDto> getRequests(Long userId, Long eventId) {
         log.debug("Получение информации о запросах на участие в событии с id = {} пользователя с id = {}", eventId, userId);
-        userService.existsById(userId);
+        userService.exists(userId);
         List<Event> events = eventRepository.findByIdAndInitiatorId(eventId, userId);
         return eventRequestService.findByEventIn(events).stream()
                 .map(EventRequestMapper::toParticipation)
@@ -165,7 +165,7 @@ public class EventServiceImpl implements EventService {
     @Transactional
     public EventRequestStatusUpdateResult update(Long userId, Long eventId, EventRequestStatusUpdateRequest dto) {
         log.debug("Изменение статуса на {}  заявок на участие в событии с id = {} пользователя с id = {}", dto.getStatus(), eventId, userId);
-        userService.existsById(userId);
+        userService.exists(userId);
         Event event = get(eventId);
         List<EventRequest> requests = eventRequestService.findAllById(dto.getRequestIds());
         EventRequestStatusUpdateResult eventRequestStatusUpdateResult = EventRequestStatusUpdateResult.builder().build();
@@ -358,6 +358,12 @@ public class EventServiceImpl implements EventService {
 
         EventFullDto eventFullDto = toFullDto(event);
         return fillViewAndConfirmedRequests(eventFullDto, event);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Event getByLocationId(Long locId) {
+        return eventRepository.getFirstByLocation_Id(locId);
     }
 
     /**

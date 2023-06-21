@@ -31,7 +31,7 @@ public interface UserService {
      *
      * @param id id пользователя
      */
-    void deleteById(Long id);
+    void delete(Long id);
 
     /**
      * Метод проверки существования пользователя
@@ -39,7 +39,7 @@ public interface UserService {
      * @param id id пользователя
      * @throws NotFoundException Пользователь не найден
      */
-    void existsById(Long id);
+    void exists(Long id);
 
     /**
      * Получение модели пользователя

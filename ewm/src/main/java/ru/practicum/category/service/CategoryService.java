@@ -50,7 +50,7 @@ public interface CategoryService {
      * @param id id категории
      */
 
-    void existsById(Long id);
+    void exists(Long id);
 
     /**
      * Удаление категории

@@ -71,7 +71,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public void existsById(Long id) {
+    public void exists(Long id) {
         log.debug("Запрос на существование категории c id = {}", id);
         if (!categoryRepository.existsById(id)) {
             throw new NotFoundException(CATEGORY, id);
@@ -82,7 +82,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Transactional
     public void delete(Long id) {
         log.debug("Удаление категории c id = {}", id);
-        existsById(id);
+        exists(id);
         Event event = eventService.findFirstByCategoryId(id);
         if (event != null) {
             throw new ConflictException("The category is not empty");
