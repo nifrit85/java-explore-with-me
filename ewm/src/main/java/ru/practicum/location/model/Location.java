@@ -22,4 +22,10 @@ public class Location {
 
     @Column(nullable = false)
     private Float lon;
+
+    @Column(length = 120)
+    private String name;
+
+    @Column(length = 7000)
+    private String description;
 }

@@ -156,5 +156,4 @@ public interface EventService {
      */
 
     EventFullDto get(Long id, HttpServletRequest request);
-
 }

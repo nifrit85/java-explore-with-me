@@ -39,7 +39,7 @@ public class EventRequestServiceImpl implements EventRequestService {
     @Transactional(readOnly = true)
     public List<ParticipationRequestDto> get(Long id) {
         log.debug("Получение информации о заявках текущего пользователя c id = {} на участие в чужих событиях", id);
-        userService.existsById(id);
+        userService.exists(id);
         return eventRequestRepository.findAllByRequesterId(id).stream()
                 .map(EventRequestMapper::toParticipation)
                 .collect(Collectors.toList());
@@ -74,7 +74,7 @@ public class EventRequestServiceImpl implements EventRequestService {
     public ParticipationRequestDto cancel(Long userId, Long requestId) {
         log.debug("Отмена своего запроса на участие в событии. Id пользователя {}, id запроса {}", userId, requestId);
 
-        userService.existsById(userId);
+        userService.exists(userId);
 
         EventRequest eventRequest = eventRequestRepository.findById(requestId)
                 .orElseThrow(() -> new NotFoundException(REQUEST, requestId));

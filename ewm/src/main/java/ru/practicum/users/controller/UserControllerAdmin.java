@@ -67,6 +67,6 @@ public class UserControllerAdmin {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void delete(@Valid @Positive @PathVariable("userId") Long userId) {
         log.info("Запрос на удаление пользователя {}", userId);
-        userService.deleteById(userId);
+        userService.delete(userId);
     }
 }
