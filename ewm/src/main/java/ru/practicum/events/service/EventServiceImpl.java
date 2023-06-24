@@ -340,13 +340,11 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    @Transactional(readOnly = true)
     public Event getByLocationId(Long locId) {
         return eventRepository.getFirstByLocation_Id(locId);
     }
 
     @Override
-    @Transactional(readOnly = true)
     public List<EventShortDto> getEventByLocationInAndState(List<Location> locations, State state) {
         log.debug("Получение списка событий в локациях {} со статусом {}", locations, state);
         List<Event> events = eventRepository.getEventByLocationInAndState(locations, state);
