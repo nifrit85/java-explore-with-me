@@ -1,9 +1,11 @@
 package ru.practicum.events.service;
 
 import ru.practicum.enums.EventSort;
+import ru.practicum.enums.State;
 import ru.practicum.eventrequests.dto.ParticipationRequestDto;
 import ru.practicum.events.dto.*;
 import ru.practicum.events.model.Event;
+import ru.practicum.location.model.Location;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -157,4 +159,33 @@ public interface EventService {
 
     EventFullDto get(Long id, HttpServletRequest request);
 
+    /**
+     * Получение одного события в локации
+     *
+     * @param locId id локации
+     * @return Событие
+     */
+
+    Event getByLocationId(Long locId);
+
+    /**
+     * Получение списка событий в конкретных локациях
+     *
+     * @param locations список локаций
+     * @param state     статус события
+     * @return список событий
+     */
+    List<EventShortDto> getEventByLocationInAndState(List<Location> locations, State state);
+
+    /**
+     * Получение списка событий на расстоянии от координат
+     *
+     * @param lat    текущая широта
+     * @param lon    текущая долгота
+     * @param radius расстояние для поиска
+     * @param from   количество локаций, которые нужно пропустить для формирования текущего набора
+     * @param size   количество локаций в наборе
+     * @return Список событий
+     */
+    List<EventShortDto> get(Float lat, Float lon, Float radius, Integer from, Integer size);
 }

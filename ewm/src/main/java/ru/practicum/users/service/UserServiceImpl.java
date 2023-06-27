@@ -48,15 +48,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public void deleteById(Long id) {
+    public void delete(Long id) {
         log.debug("Удаление пользователя {}", id);
-        existsById(id);
+        exists(id);
         userRepository.deleteById(id);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public void existsById(Long id) {
+    public void exists(Long id) {
         log.debug("Проверка существования пользователя {}", id);
         if (!userRepository.existsById(id)) {
             throw new NotFoundException(USER, id);
