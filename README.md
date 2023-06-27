@@ -1,8 +1,5 @@
 # java-explore-with-me
 
-## Pull Request
-https://github.com/nifrit85/java-explore-with-me/pull/5
-
 # Идея
 
 Свободное время — ценный ресурс. Ежедневно мы планируем, как его потратить — куда и с кем сходить. Сложнее всего в таком
